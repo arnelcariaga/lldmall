@@ -3,6 +3,8 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Image from 'next/image';
 import { card, add_cart_icon } from "./listItem.module.css"
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
 const itemsArray = [
     {
@@ -249,47 +251,48 @@ const itemsArray = [
 
 function CardItem() {
     return (
-        <>
-            {
-                itemsArray.map(({ title, image, rating, price }, i) =>
-                    <Col lg={3} key={i}>
-                        <Card className={`border-light-subtle ${card}`}>
-                            <Image
-                                alt={title}
-                                src={image}
-                                width={200}
-                                height={200}
-                                className='object-fit-contain position-relative mx-auto p-3'
-                            />
+        <Container>
+            <Row>
+                {
+                    itemsArray.map(({ title, image, rating, price }, i) =>
+                        <Col lg={3} key={i}>
+                            <Card className={`border-light-subtle ${card}`}>
+                                <Image
+                                    alt={title}
+                                    src={image}
+                                    width={200}
+                                    height={200}
+                                    className='object-fit-contain position-relative mx-auto p-3'
+                                />
 
-                            <Card.Body className='p-3'>
-                                <Card.Text className='small text-truncate'>
-                                    {title}
-                                </Card.Text>
-
-                                <Stack direction='horizontal' className='justify-content-between'>
-                                    <Card.Text className='fs-6 fw-bold'>
-                                        $USD {price}
+                                <Card.Body className='p-3'>
+                                    <Card.Text className='small text-truncate'>
+                                        {title}
                                     </Card.Text>
 
-                                    <p className={`fs-5 ${add_cart_icon}`}>
-                                        <i className="bi bi-cart-plus"></i>
-                                    </p>
-                                </Stack>
+                                    <Stack direction='horizontal' className='justify-content-between'>
+                                        <Card.Text className='fs-6 fw-bold'>
+                                            $USD {price}
+                                        </Card.Text>
 
-                                <Stack direction='horizontal' className='column-gap-1 text-warning small'>
-                                    <i className="bi bi-star-fill"></i>
-                                    <span>{rating.rate}</span> |
-                                    <span className='text-muted'>+3,450 vendidos</span>
-                                </Stack>
+                                        <p className={`fs-5 ${add_cart_icon}`}>
+                                            <i className="bi bi-cart-plus"></i>
+                                        </p>
+                                    </Stack>
 
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                )
-            }
+                                    <Stack direction='horizontal' className='column-gap-1 text-warning small'>
+                                        <i className="bi bi-star-fill"></i>
+                                        <span>{rating.rate}</span> |
+                                        <span className='text-muted'>+3,450 vendidos</span>
+                                    </Stack>
 
-        </>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    )
+                }
+            </Row>
+        </Container>
     );
 }
 
