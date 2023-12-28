@@ -1,3 +1,5 @@
+'use client';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -11,6 +13,8 @@ import Image from 'next/image';
 import { user_dropdown, logo_text, btn_search, navbar_icons } from "./navbars.module.css"
 import MySubNavbar from './MySubNavbar';
 import Stack from 'react-bootstrap/Stack';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function MyNavbar() {
     return (
@@ -110,10 +114,39 @@ function MyNavbar() {
 }
 
 function RenderMyNavbar() {
-    return <Stack className='border-bottom'>
-        <MyNavbar />
-        <MySubNavbar />
-    </Stack>
+    const [isScrollingUp, setIsScrollingUp] = React.useState(false);
 
+    React.useEffect(() => {
+        let lastScrollTop = 0;
+
+        const handleScroll = () => {
+            const st = window.scrollY || document.documentElement.scrollTop;
+
+            if (st > lastScrollTop) {
+                // Scrolling down
+                setIsScrollingUp(false);
+            } else {
+                // Scrolling up
+                setIsScrollingUp(true);
+            }
+
+            lastScrollTop = st <= 0 ? 0 : st;
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    return <Row className={`bg-body ${isScrollingUp && "sticky-top"}`}>
+        <Col>
+            <Stack className='border-bottom'>
+                <MyNavbar />
+                <MySubNavbar />
+            </Stack>
+        </Col>
+    </Row>
 }
 export default RenderMyNavbar;
