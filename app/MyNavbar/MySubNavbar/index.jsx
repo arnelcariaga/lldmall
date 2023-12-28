@@ -1,28 +1,24 @@
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Image from 'next/image';
-import styles from "./../page.module.css"
+import { navbar_icons } from "./../navbars.module.css"
 
 function MySubNavbar() {
     return (
         <Navbar expand="lg">
             <Container fluid>
-                <Navbar.Toggle aria-controls="navbarScroll" />
+                <Navbar.Toggle aria-controls="navbarScroll" className='btn' />
 
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
-                        className="me-auto my-2 my-lg-0 align-items-center gap-2"
-                        style={{ maxHeight: '100px' }}
-                        navbarScroll
+                        className="me-auto my-2 my-lg-0 align-items-start align-items-lg-center gap-sm-5 gap-lg-2 gap-4"
                     >
-                        <NavDropdown title={<><i className={`${styles.navbar_icons} bi bi-list-nested`}></i> Categorias</>} id="navbarScrollingDropdown">
+                        <NavDropdown
+                            title={<><i className={`${navbar_icons} bi bi-list-nested`}></i> Categorias</>}
+                            id="navbarScrollingDropdown"
+                        >
                             <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action4">
                                 Another action
@@ -32,7 +28,7 @@ function MySubNavbar() {
                                 Something else here
                             </NavDropdown.Item>
                         </NavDropdown>
-                        |
+                        <span className='d-none d-lg-block'>|</span>
                         <NavDropdown title="Buyer central" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action4">
