@@ -262,7 +262,6 @@ function CardItem() {
                                 className='object-fit-contain position-relative mx-auto p-3'
                             />
 
-                            {/* <Card.Img variant="top" src={image} className='p-5' /> */}
                             <Card.Body className='p-3'>
                                 <Card.Text className='small text-truncate'>
                                     {title}
@@ -274,18 +273,15 @@ function CardItem() {
                                     </Card.Text>
 
                                     <p className={`fs-5 ${add_cart_icon}`}>
-                                        <i class="bi bi-cart-plus"></i>
+                                        <i className="bi bi-cart-plus"></i>
                                     </p>
                                 </Stack>
 
-
-                                <Card.Text className='small'>
-                                    <Stack direction='horizontal' className='column-gap-1 text-warning'>
-                                        <i class="bi bi-star-fill"></i>
-                                        <span>{rating.rate}</span> |
-                                        <span className='text-muted'>+3,450 vendidos</span>
-                                    </Stack>
-                                </Card.Text>
+                                <Stack direction='horizontal' className='column-gap-1 text-warning small'>
+                                    <i className="bi bi-star-fill"></i>
+                                    <span>{rating.rate}</span> |
+                                    <span className='text-muted'>+3,450 vendidos</span>
+                                </Stack>
 
                             </Card.Body>
                         </Card>
