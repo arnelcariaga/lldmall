@@ -1,5 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "./global.css";
+import ThemeProvider from "react-bootstrap/ThemeProvider";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 import Container from "react-bootstrap/Container";
@@ -11,7 +13,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" data-bs-theme="light">
       <body className={inter.className}>
         <Container fluid>{children}</Container>
       </body>
