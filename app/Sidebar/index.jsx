@@ -1,3 +1,4 @@
+'use client'
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
