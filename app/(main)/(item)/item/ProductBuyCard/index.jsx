@@ -17,7 +17,7 @@ export default function ProductBuyCard() {
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <InputGroup size="sm">
                                 <InputGroup.Text>
-                                    <i class="bi bi-geo-alt"></i>
+                                    <i className="bi bi-geo-alt"></i>
                                 </InputGroup.Text>
                                 <Form.Select>
                                     <option value="1">Chicago</option>
@@ -35,16 +35,16 @@ export default function ProductBuyCard() {
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <InputGroup size="sm">
                                 <InputGroup.Text>
-                                    <i class="bi bi-dash"></i>
+                                    <i className="bi bi-dash"></i>
                                 </InputGroup.Text>
                                 <Form.Control
                                     type="text"
-                                    id="inputPassword5"
                                     aria-describedby="passwordHelpBlock"
                                     value={7}
+                                    onChange={() => { }}
                                 />
                                 <InputGroup.Text>
-                                    <i class="bi bi-plus"></i>
+                                    <i className="bi bi-plus"></i>
                                 </InputGroup.Text>
                             </InputGroup>
                         </Form.Group>
