@@ -1,0 +1,9 @@
+.add_to_cart_btn {
+  background-color: #081c70;
+}
+.buy_now_btn {
+  background-color: transparent;
+  color: #081c70;
+  border-width: 1px;
+  border-color: #081c70;
+}
