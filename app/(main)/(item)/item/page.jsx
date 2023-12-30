@@ -1,11 +1,5 @@
-import Image from 'next/image';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-
-
-
-const ProductDetail = () => {
+export default function ProductDetail() {
     return (
         <>
             <h2>Product Title</h2>
@@ -16,5 +10,3 @@ const ProductDetail = () => {
         </>
     );
 };
-
-export default ProductDetail;
