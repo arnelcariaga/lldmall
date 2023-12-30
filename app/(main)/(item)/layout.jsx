@@ -12,7 +12,7 @@ export const metadata = {
 export default function ItemLayout({ children }) {
     return (
         <Container fluid>
-            <Row className="mt-4">
+            <Row className="mt-4 row-gap-5">
                 <Col lg={4}>
                     <ProductPreview />
                 </Col>
