@@ -256,7 +256,7 @@ function ListItems() {
             <Row>
                 {
                     itemsArray.map(({ title, image, rating, price }, i) =>
-                        <Col lg={3} key={i}>
+                        <Col lg={3} key={i} className='mb-4'>
                             <Link href="/item" className='text-decoration-none'>
                                 <Card className={`border-light-subtle ${card}`}>
                                     <Image
