@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Image from 'next/image';
-import { card, add_cart_icon } from "./listItem.module.css"
+import { card } from "./listItem.module.css"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Link from 'next/link';
@@ -257,7 +257,7 @@ function CardItem() {
                 {
                     itemsArray.map(({ title, image, rating, price }, i) =>
                         <Col lg={3} key={i}>
-                            <Link href="/item">
+                            <Link href="/item" className='text-decoration-none'>
                                 <Card className={`border-light-subtle ${card}`}>
                                     <Image
                                         alt={title}
@@ -277,7 +277,7 @@ function CardItem() {
                                                 $USD {price}
                                             </Card.Text>
 
-                                            <p className={`fs-5 ${add_cart_icon}`}>
+                                            <p className="fs-5">
                                                 <i className="bi bi-cart-plus"></i>
                                             </p>
                                         </Stack>
@@ -285,7 +285,7 @@ function CardItem() {
                                         <Stack direction='horizontal' className='column-gap-1 text-warning small'>
                                             <i className="bi bi-star-fill"></i>
                                             <span>{rating.rate}</span> |
-                                            <span className='text-muted'>+3,450 vendidos</span>
+                                            <span className='text-secondary'>+3,450 vendidos</span>
                                         </Stack>
 
                                     </Card.Body>
