@@ -4,15 +4,8 @@
   box-shadow: none;
   border-color: transparent;
 }
-.btn {
-  border-width: 0; /* Remove outline on click out of btn */
-}
 /* Remove focus styling for inputs */
 .form-control:focus {
   outline: none;
   box-shadow: none;
-}
-.form-check-input:checked {
-  background-color: #081c70;
-  border-color: #081c70;
 }
