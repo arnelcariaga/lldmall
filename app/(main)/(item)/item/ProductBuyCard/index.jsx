@@ -5,11 +5,10 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
-import { add_to_cart_btn, buy_now_btn } from "./product_buy_card.module.css"
 
 export default function ProductBuyCard() {
     return (
-        <Card className='border-light-subtle mb-4'>
+        <Card className='border-light-subtle mb-4 sticky-top'>
             <Card.Body>
                 <Card.Title className='fs-6 ms-2 mt-4'>Delivery</Card.Title>
                 <Nav defaultActiveKey="/home" className="flex-column">
@@ -71,8 +70,8 @@ export default function ProductBuyCard() {
                         </Nav.Link>
                     </Stack>
                     <Stack className='row-gap-3'>
-                        <Button className={add_to_cart_btn}>Add to cart</Button>
-                        <Button className={buy_now_btn}>Buy Now</Button>
+                        <Button>Add to cart</Button>
+                        <Button variant='outline-primary'>Buy Now</Button>
                     </Stack>
                 </Nav>
 
