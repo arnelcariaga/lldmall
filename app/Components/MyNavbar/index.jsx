@@ -15,6 +15,7 @@ import MySubNavbar from './MySubNavbar';
 import Stack from 'react-bootstrap/Stack';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Link from 'next/link';
 
 function MyNavbar() {
     return (
@@ -100,9 +101,13 @@ function MyNavbar() {
                                 Another action
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action5">
-                                Something else here
-                            </NavDropdown.Item>
+
+                            <Link href='/signUp' passHref legacyBehavior className='text-decoration-none'>
+                                <NavDropdown.Item>
+                                    Cerrar sesion
+                                </NavDropdown.Item>
+                            </Link>
+
                         </NavDropdown>
 
                     </Nav>
