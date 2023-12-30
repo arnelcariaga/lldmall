@@ -69,7 +69,7 @@ export default function ProductBuyCard() {
                             $USD2
                         </Nav.Link>
                     </Stack>
-                    <Stack className='row-gap-3'>
+                    <Stack className='row-gap-3 mt-4'>
                         <Button>Add to cart</Button>
                         <Button variant='outline-primary'>Buy Now</Button>
                     </Stack>
