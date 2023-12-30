@@ -8,7 +8,6 @@ export default function MyCarousel() {
         <>
             <Card className='border-light-subtle align-items-center'>
                 <Carousel
-                    variant="dark"
                     interval={null}
                     indicators={false}
                     controls={false}
@@ -49,7 +48,6 @@ export default function MyCarousel() {
             </Card>
 
             <Carousel
-                variant="dark"
                 interval={null}
                 indicators={false}
                 onSelect={(eventKey) => {
