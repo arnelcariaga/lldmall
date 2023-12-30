@@ -250,7 +250,7 @@ const itemsArray = [
     }
 ]
 
-function CardItem() {
+function ListItems() {
     return (
         <Container>
             <Row>
@@ -299,4 +299,4 @@ function CardItem() {
     );
 }
 
-export default CardItem;
+export default ListItems;
