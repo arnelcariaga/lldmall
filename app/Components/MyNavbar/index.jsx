@@ -10,7 +10,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'next/image';
-import { user_dropdown, logo_text, btn_search, navbar_icons } from "./navbars.module.css"
+import { user_dropdown, logo_text, navbar_icons } from "./navbars.module.css"
 import MySubNavbar from './MySubNavbar';
 import Stack from 'react-bootstrap/Stack';
 import Row from 'react-bootstrap/Row';
@@ -51,7 +51,7 @@ function MyNavbar() {
                                 aria-label="Text input with dropdown button"
                                 className='border-top-0 border-bottom-0 border-end-0'
                             />
-                            <Button className={`${btn_search} rounded-5 me-1`}>
+                            <Button className="rounded-5 me-1">
                                 <i className="bi bi-search"></i>{' '} Buscar
                             </Button>
                         </InputGroup>
