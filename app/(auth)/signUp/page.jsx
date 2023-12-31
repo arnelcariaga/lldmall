@@ -10,7 +10,7 @@ import Image from "next/image"
 export default function SignUp() {
     return <Card.Body className="pb-0">
         <Stack className='flex-row column-gap-3 mb-3 text-muted'>
-            <i class="bi bi-arrow-right"></i>
+            <i className="bi bi-arrow-right"></i>
             Creacion de cuenta
         </Stack>
         <Stack className="row-gap-3">
