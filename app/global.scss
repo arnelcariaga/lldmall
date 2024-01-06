@@ -1,11 +1,3 @@
-// change the theme
-$theme-colors: (
-  "primary": #081c70
-);
-
-// Import Bootstrap and its default variables
-@import "~bootstrap/scss/bootstrap.scss";
-
 /* Remove focus styling for buttons */
 .btn:focus {
   outline: none;
