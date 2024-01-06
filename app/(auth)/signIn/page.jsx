@@ -5,9 +5,24 @@ import Button from "react-bootstrap/Button"
 import InputGroup from "react-bootstrap/InputGroup"
 import Stack from "react-bootstrap/Stack"
 import Link from "next/link"
-import Image from "next/image"
 import { useForm } from "react-hook-form"
 import { signIn } from 'next-auth/react';
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
+
+const socialNetLog = [{
+    name: "facebook",
+    icon: "bi bi-facebook"
+}, {
+    name: "gmail",
+    icon: "bi bi-google"
+}, {
+    name: "twitter",
+    icon: "bi bi-twitter-x"
+}, {
+    name: "apple",
+    icon: "bi bi-apple"
+}]
 
 export default function SignIn() {
     const {
@@ -32,40 +47,44 @@ export default function SignIn() {
             Iniciar sesion
         </Stack>
         <Form autoComplete="off">
-            <Stack className="row-gap-3">
-                <InputGroup>
-                    <InputGroup.Text id="basic-addon1" className="border-0"><i className="bi bi-person"></i></InputGroup.Text>
-                    <Form.Control
-                        placeholder="Correo electronico"
-                        {...register("email", {
-                            required: "Campo obligatorio",
-                            pattern: {
-                                value: /\S+@\S+\.\S+/,
-                                message: "No es un correo válido",
-                            },
-                        })}
-                        aria-label="Correo electronico"
-                        aria-describedby="basic-addon1"
-                        className="border-0 bg-secondary-subtle"
-                        isInvalid={errors.email?.message}
-                    />
-                    <Form.Control.Feedback tooltip type={errors.email?.message && "invalid"}>
-                        {errors.email?.message}
-                    </Form.Control.Feedback>
-                </InputGroup>
+            <Row className="row-gap-3">
+                <Col md={12}>
+                    <InputGroup>
+                        <InputGroup.Text id="basic-addon1" className="border-0"><i className="bi bi-person"></i></InputGroup.Text>
+                        <Form.Control
+                            placeholder="Correo electronico"
+                            {...register("email", {
+                                required: "Campo obligatorio",
+                                pattern: {
+                                    value: /\S+@\S+\.\S+/,
+                                    message: "No es un correo válido",
+                                },
+                            })}
+                            aria-label="Correo electronico"
+                            aria-describedby="basic-addon1"
+                            className="border-0 bg-secondary-subtle"
+                            isInvalid={errors.email?.message}
+                        />
+                        <Form.Control.Feedback tooltip type={errors.email?.message && "invalid"}>
+                            {errors.email?.message}
+                        </Form.Control.Feedback>
+                    </InputGroup>
+                </Col>
 
-                <InputGroup>
-                    <InputGroup.Text id="basic-addon1" className="border-0"><i className="bi bi-lock"></i></InputGroup.Text>
-                    <Form.Control
-                        placeholder="Contraseña"
-                        {...register("pass", {
-                            required: "Campo obligatorio"
-                        })}
-                        aria-label="Contraseña"
-                        aria-describedby="basic-addon1"
-                        className="border-0 bg-secondary-subtle"
-                    />
-                </InputGroup>
+                <Col md={12}>
+                    <InputGroup>
+                        <InputGroup.Text id="basic-addon1" className="border-0"><i className="bi bi-lock"></i></InputGroup.Text>
+                        <Form.Control
+                            placeholder="Contraseña"
+                            {...register("pass", {
+                                required: "Campo obligatorio"
+                            })}
+                            aria-label="Contraseña"
+                            aria-describedby="basic-addon1"
+                            className="border-0 bg-secondary-subtle"
+                        />
+                    </InputGroup>
+                </Col>
 
                 <div className="d-grid row-gap-3">
                     <Link href="" className='text-decoration-none ms-auto text-muted'>
@@ -82,48 +101,23 @@ export default function SignIn() {
                         </Button>
                     </Link>
                 </div>
-            </Stack>
+            </Row>
         </Form>
         <Stack direction="horizontal" className="column-gap-3 justify-content-center mt-3 text-muted">
             Acceder mas rapido con:
         </Stack>
         <Stack direction="horizontal" className="column-gap-3 justify-content-center mt-3">
-            <Button className="border-0" variant="outline">
-                <Image
-                    alt="facebook"
-                    src="/imgs/Facebook_Logo_Primary.png"
-                    width={25}
-                    height={25}
-                    className='object-fit-contain'
-                />
-            </Button>
-            <Button className="border-0" variant="outline">
-                <Image
-                    alt="gmail"
-                    src="/imgs/gmail.png"
-                    width={25}
-                    height={25}
-                    className='object-fit-contain'
-                />
-            </Button>
-            <Button className="border-0" variant="outline">
-                <Image
-                    alt="twitter"
-                    src="/imgs/logo-black.png"
-                    width={25}
-                    height={25}
-                    className='object-fit-contain'
-                />
-            </Button>
-            <Button className="border-0" variant="outline">
-                <Image
-                    alt="apple"
-                    src="/imgs/Apple_logo_black.svg"
-                    width={25}
-                    height={25}
-                    className='object-fit-contain'
-                />
-            </Button>
+            {
+                socialNetLog.map(({ name, icon }) => {
+                    return <Button
+                        key={name}
+                        className="border-0 bg-secondary-subtle rounded-circle"
+                        variant="outline"
+                    >
+                        <i className={icon}></i>
+                    </Button>
+                })
+            }
         </Stack>
     </Card.Body>
 }
