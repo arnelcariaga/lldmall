@@ -86,7 +86,7 @@ function MyNavbar() {
                             title={
                                 <Image
                                     alt=""
-                                    src="/imgs/balazs-orban.png"
+                                    src="/imgs/user_default_profile.svg"
                                     width="45"
                                     height="45"
                                     className="d-inline-block align-top rounded rounded-circle"
