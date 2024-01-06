@@ -10,6 +10,8 @@ import { useForm } from "react-hook-form"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import { Typeahead } from 'react-bootstrap-typeahead';
+import { useRouter } from "next/navigation"
+import MyToast from "@/app/Components/MyToast"
 
 const socialNetLog = [{
     name: "facebook",
@@ -28,16 +30,19 @@ const socialNetLog = [{
 export default function SignUpForm({ countries }) {
     const [disableSignUpBtn, setDisableSignUpBtn] = useState(false)
     const [selectedCountry, setSelectedCountry] = useState([])
-    const [username, setUsername] = useState("")
-    const [isCheckingUsername, setIsCheckingUsername] = useState(false)
+    const [submitMsgStatus, setSubmitMsgStatus] = useState("")
+    const [showToast, setShowToast] = useState(false)
+    const [toastType, setToastType] = useState("")
 
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
+        setError
     } = useForm()
     const countriesParse = JSON.parse(countries)
+    const router = useRouter()
 
     const inputs = useMemo(() => {
         return [{
@@ -141,7 +146,7 @@ export default function SignUpForm({ countries }) {
     }, [watch])
 
     const onSubmit = async (data) => {
-        //setDisableSignUpBtn(true)
+        setDisableSignUpBtn(true)
         const newData = { ...data, countryId: selectedCountry[0].countId }
         const response = await fetch('/api/auth/signUp', {
             method: 'POST',
@@ -151,25 +156,27 @@ export default function SignUpForm({ countries }) {
             body: JSON.stringify({ ...newData }),
         })
         const resJson = await response.json()
-        console.log(resJson)
-    }
+        const { message } = resJson
 
-    const onChangeUsername = (t) => {
-        const { value } = t.target
-        setUsername(value)
-    }
-
-    const checkUsername = async () => {
-        setIsCheckingUsername(true)
-        const response = await fetch('/api/checkUsername', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username }),
-        })
-        const resJson = await response.json()
-        console.log(resJson)
+        if (message === "user_already_exist") {
+            setError("email", { type: "focus", message: "Este correo ya existe" }, { shouldFocus: true })
+            setDisableSignUpBtn(false)
+        } else if (message === "user_successfully_added") {
+            router.push("/signIn")
+        } else if (message === "adding_user_failed") {
+            setToastType("danger")
+            setSubmitMsgStatus("Error al registrarse, favor comunicarse con el administrador")
+            setShowToast(true)
+            setDisableSignUpBtn(false)
+        } else if (message === "username_already_exist") {
+            setError("username", { type: "focus", message: "Este nombre de usuario ya existe, elija otro" }, { shouldFocus: true })
+            setDisableSignUpBtn(false)
+        } else {
+            setToastType("danger")
+            setSubmitMsgStatus("Error al registrarse, por favor verifique su conexión internet o comuníquese con el administrador")
+            setShowToast(true)
+            setDisableSignUpBtn(false)
+        }
     }
 
     return <Card.Body className="pb-0">
@@ -195,20 +202,7 @@ export default function SignUpForm({ countries }) {
                                     })}
                                     isInvalid={errors[name]?.message}
                                     type={type}
-                                    onChange={name === "username" ? onChangeUsername : () => { }}
                                 />
-                                {
-                                    name === "username" &&
-                                    username.length > 2 &&
-                                    <Button
-                                        variant="outline-success"
-                                        size="sm"
-                                        onClick={checkUsername}
-                                        disabled={isCheckingUsername}
-                                    >
-                                        {isCheckingUsername ? "Verificando..." : "Verificar"}
-                                    </Button>
-                                }
                                 {
                                     errors[name]?.type !== "required" &&
                                     <Form.Control.Feedback
@@ -288,5 +282,12 @@ export default function SignUpForm({ countries }) {
                 })
             }
         </Stack>
+        <MyToast
+            show={showToast}
+            bg={toastType}
+            msg={submitMsgStatus}
+            close={() => setShowToast(false)}
+            subTitle="Registro de usuario"
+        />
     </Card.Body>
 }
