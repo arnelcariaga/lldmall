@@ -4,86 +4,95 @@ import { hashP } from "@/app/libs/crypt";
 
 export async function POST(request) {
   try {
-    const { pass, firstName, lastName, email, countryId } =
+    const { pass, firstName, lastName, email, countryId, username } =
       await request.json();
 
-    const pHashh = await hashP(pass);
-
-    const result = await conn.query("INSERT INTO user SET ?", {
-      firstName,
-      lastName,
-      email,
-      pass: pHashh,
-      userTypeId: 2, //Default to 2 (User)
-      countryId,
-    });
-
-    return NextResponse.json(
-      {
-        message: result,
-      },
-      {
-        status: 200,
-      }
+    const checkUser = await conn.query(
+      "SELECT email FROM user WHERE email = ?",
+      email
     );
 
-    /* const image = data.get("image");
-  
-      if (!data.get("name")) {
-        return NextResponse.json(
+    const checkUsername = await conn.query(
+      "SELECT username FROM registered_usernames WHERE username = ?",
+      username
+    );
+
+    await conn.end();
+
+    if (checkUser.length > 0) {
+      return NextResponse.json(
+        {
+          message: "user_already_exist",
+        },
+        {
+          status: 401,
+        }
+      );
+    } else if (checkUsername.length > 0) {
+      return NextResponse.json(
+        {
+          message: "username_already_exist",
+        },
+        {
+          status: 401,
+        }
+      );
+    } else {
+      const pHashh = await hashP(pass);
+
+      const results = await conn.query("INSERT INTO user SET ?", {
+        firstName,
+        lastName,
+        email,
+        pass: pHashh,
+        userTypeId: 2, //Default to 2 (User)
+        countryId,
+      });
+
+      await conn.end();
+
+      if (results) {
+        const userId = results.insertId;
+        const resultsInsertUsername = await conn.query(
+          "INSERT INTO registered_usernames SET ?",
           {
-            message: "Name is required",
-          },
-          {
-            status: 400,
+            username,
+            userId,
           }
         );
-      }
-  
-      if (!image) {
-        return NextResponse.json(
-          {
-            message: "Image is required",
-          },
-          {
-            status: 400,
-          }
-        );
-      }
-  
-      const buffer = await processImage(image);
-  
-      const res = await new Promise((resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream(
+
+        await conn.end();
+
+        if (resultsInsertUsername) {
+          return NextResponse.json(
             {
-              resource_type: "image",
+              message: "user_successfully_added",
             },
-            async (err, result) => {
-              if (err) {
-                console.log(err);
-                reject(err);
-              }
-  
-              resolve(result);
+            {
+              status: 200,
             }
-          )
-          .end(buffer);
-      });
-  
-      const result = await conn.query("INSERT INTO product SET ?", {
-        name: data.get("name"),
-        description: data.get("description"),
-        price: data.get("price"),
-        image: res.secure_url,
-      });
-  
-      return NextResponse.json({
-        name: data.get("name"),
-        description: data.get("description"),
-        price: data.get("price"),
-        id: result.insertId,
-      }); */
+          );
+        } else {
+          return NextResponse.json(
+            {
+              message: "adding_user_failed",
+            },
+            {
+              status: 500,
+            }
+          );
+        }
+      } else {
+        return NextResponse.json(
+          {
+            message: "adding_user_failed",
+          },
+          {
+            status: 500,
+          }
+        );
+      }
+    }
   } catch (error) {
     return NextResponse.json(
       {
