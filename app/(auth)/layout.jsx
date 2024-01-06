@@ -1,3 +1,4 @@
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import Footer from "../Components/Footer";
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
@@ -15,8 +16,8 @@ export default function AuthLayout({ children }) {
         <Container fluid>
             {/* First Row */}
             <Row className="vh-100 justify-content-center align-items-center">
-                <Col lg={6} md={8} sm={8} xl={4} className="pt-4">
-                    <Card className="p-4 border-0 shadow">
+                <Col lg={8} sm={10} xl={6} xxl={6} className="pt-4">
+                    <Card className="p-2 border-0 shadow">
                         <JoinHeader />
                         {children}
                     </Card>
