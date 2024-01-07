@@ -1,12 +1,10 @@
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import Footer from "../Components/Footer";
+import Footer from "@/app/Components/Footer";
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
-import JoinHeader from "./JoinHeader";
-import { getServerSession } from "next-auth/next"
-import { redirect } from "next/navigation"
+import JoinHeader from "@/app/Components/JoinHeader";
 
 export const metadata = {
     title: "LLDMAll | Indentifiquese",
@@ -14,9 +12,6 @@ export const metadata = {
 };
 
 export default async function AuthLayout({ children }) {
-    const session = await getServerSession()
-    if (session) return redirect("/dashboard")
-
     return (
         <Container fluid>
             {/* First Row */}
