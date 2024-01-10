@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+'use client'
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -10,24 +10,29 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'next/image';
-import { user_dropdown, logo_text, navbar_icons } from "./navbars.module.css"
+import { logo_text, navbar_icons } from "./navbars.module.css"
 import MySubNavbar from './MySubNavbar';
 import Stack from 'react-bootstrap/Stack';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useSession } from 'next-auth/react';
+import AuthUserNavs from '@/app/Components/MyNavbar/AuthUserNavs';
 import Link from 'next/link';
+import Placeholder from 'react-bootstrap/Placeholder';
 
 function MyNavbar() {
+    const { data, status } = useSession()
+    const user = data?.user
     return (
         <Navbar expand="lg">
             <Container fluid>
-                <Navbar.Brand href="#" className={logo_text}>
+                <Navbar.Brand as={Link} href="/" className={logo_text}>
                     <Image
                         alt=""
                         src="/imgs/logo.svg"
                         width="30"
                         height="30"
-                        className="d-inline-block align-top"
+                        className="d-inline-block align-top me-3"
                     />{' '}
                     LLDMall
                 </Navbar.Brand>
@@ -59,7 +64,7 @@ function MyNavbar() {
                     </Form>
 
                     <Nav
-                        className="me-auto my-2 my-lg-0 align-items-center justify-content-center flex-row gap-sm-5 gap-lg-2 gap-4"
+                        className="me-auto my-2 my-lg-0 w-75 align-items-center justify-content-end flex-row gap-sm-5 gap-lg-3 gap-4"
                     >
                         <NavDropdown title="EN" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
@@ -75,40 +80,40 @@ function MyNavbar() {
                         <Nav.Link href="#action1">
                             <i className={`${navbar_icons} bi bi-cart`}></i>
                         </Nav.Link>
-                        <Nav.Link href="#action2">
-                            <i className={`${navbar_icons} bi bi-bell`}></i>
-                        </Nav.Link>
-                        <Nav.Link href="#" >
-                            <i className={`${navbar_icons} bi bi-envelope`}></i>
-                        </Nav.Link>
-                        |
-                        <NavDropdown
-                            title={
-                                <Image
-                                    alt=""
-                                    src="/imgs/user_default_profile.svg"
-                                    width="45"
-                                    height="45"
-                                    className="d-inline-block align-top rounded rounded-circle"
-                                />
-                            }
-                            id="navbarScrollingDropdown"
-                            className={user_dropdown}
-                            align="end"
+
+                        <Button
+                            size='sm'
+                            as={Link}
+                            href="/sell"
                         >
-                            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action4">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
+                            Vender
+                        </Button>
 
-                            <Link href='/signUp' passHref legacyBehavior className='text-decoration-none'>
-                                <NavDropdown.Item>
-                                    Cerrar sesion
-                                </NavDropdown.Item>
-                            </Link>
-
-                        </NavDropdown>
+                        {
+                            status === "loading" ?
+                                <Placeholder animation="glow" xs={4}>
+                                    <Placeholder xs={12} />
+                                </Placeholder>
+                                : status === "authenticated" ? <AuthUserNavs user={user} /> :
+                                    <Stack direction='horizontal' className='column-gap-3'>
+                                        <Button
+                                            size='sm'
+                                            as={Link}
+                                            href="/signUp"
+                                        >
+                                            Registrarse
+                                        </Button>
+                                        <Button
+                                            size='sm'
+                                            className='text-nowrap'
+                                            as={Link}
+                                            href="/signIn"
+                                            variant="outline-primary"
+                                        >
+                                            Iniciar sesion
+                                        </Button>
+                                    </Stack>
+                        }
 
                     </Nav>
 
@@ -119,9 +124,9 @@ function MyNavbar() {
 }
 
 function RenderMyNavbar() {
-    const [isScrollingUp, setIsScrollingUp] = React.useState(false);
+    const [isScrollingUp, setIsScrollingUp] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         let lastScrollTop = 0;
 
         const handleScroll = () => {
