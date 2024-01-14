@@ -221,8 +221,9 @@ export default function SignUpForm({ countries }) {
                                     onChange={(selected) => {
                                         setSelectedCountry(selected)
                                     }}
-                                    options={countriesParse}
+                                    options={countriesParse.length > 0 ? countriesParse : []}
                                     labelKey="name"
+                                    emptyLabel="Error al cargar los datos, verifique su internet o contacte con soporte."
                                     placeholder={placeHolder}
                                     inputProps={{
                                         className: "border-0 bg-secondary-subtle",
