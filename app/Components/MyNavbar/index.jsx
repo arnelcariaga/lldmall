@@ -19,10 +19,14 @@ import { useSession } from 'next-auth/react';
 import AuthUserNavs from '@/app/Components/MyNavbar/AuthUserNavs';
 import Link from 'next/link';
 import Placeholder from 'react-bootstrap/Placeholder';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleDark } from '@/app/Redux/Slices/settingsSlice';
 
 function MyNavbar() {
     const { data, status } = useSession()
     const user = data?.user
+    const darkMode = useSelector(s => s.settings.darkMode)
+    const dispatch = useDispatch()
     return (
         <Navbar expand="lg">
             <Container fluid>
@@ -80,6 +84,20 @@ function MyNavbar() {
                         <Nav.Link href="#action1">
                             <i className={`${navbar_icons} bi bi-cart`}></i>
                         </Nav.Link>
+
+                        <Button
+                            size='sm'
+                            className='rounded-circle'
+                            variant=''
+                            onClick={() => dispatch(toggleDark())}
+                        >
+                            {
+                                darkMode === 'light' ?
+                                    <i className="bi bi-sun-fill"></i>
+                                    :
+                                    <i class="bi bi-moon-stars-fill"></i>
+                            }
+                        </Button>
 
                         <Button
                             size='sm'
