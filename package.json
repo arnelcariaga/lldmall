@@ -22,6 +22,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
     "react-redux": "^9.0.4",
+    "redux-persist": "^6.0.0",
     "serverless-mysql": "^1.5.5"
   },
   "devDependencies": {
