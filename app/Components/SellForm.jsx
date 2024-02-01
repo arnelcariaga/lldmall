@@ -200,8 +200,6 @@ export default function SellForm() {
         console.log(data)
     }
 
-    console.log(errors)
-
     return <Container>
         <Row className="justify-content-center mt-5">
             <Col md={8}>
