@@ -9,8 +9,6 @@ export async function middleware(request) {
   const Redirect = () => {
     if (user.userTypeId === 1) {
       return NextResponse.redirect(new URL("/adm/dashboard", request.url));
-    } else if (user.userTypeId === 2) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
     } else {
       return NextResponse.redirect(
         new URL(
@@ -27,28 +25,19 @@ export async function middleware(request) {
     return Redirect();
   }
 
-  if (
-    (!!token && pathname.startsWith("/adm") && user.userTypeId !== 1) ||
-    (!!token && pathname.startsWith("/dashboard") && user.userTypeId !== 2)
-  ) {
+  if (!!token && pathname.startsWith("/adm") && user.userTypeId !== 1) {
     return Redirect();
   }
 
   if (!token) {
-    if (
-      pathname.includes("/dashboard") ||
-      pathname.includes("/adm/dashboard")
-    ) {
+    if (pathname.includes("/adm/dashboard")) {
       return Response.json(
         { success: false, message: "authentication failed" },
         { status: 401 }
       );
     }
   } else {
-    if (
-      (pathname.startsWith("/adm/dashboard") && user.userTypeId !== 1) ||
-      (pathname.startsWith("/dashboard") && user.userTypeId !== 2)
-    ) {
+    if (pathname.startsWith("/adm/dashboard") && user.userTypeId !== 1) {
       console.log(pathname, user.userTypeId);
       return Response.json(
         { success: false, message: "authentication failed" },
@@ -59,11 +48,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: [
-    "/signIn",
-    "/signUp",
-    "/forgot_password",
-    "/adm/:path*",
-    "/dashboard/:path*",
-  ],
+  matcher: ["/signIn", "/signUp", "/forgot_password", "/adm/:path*"],
 };
