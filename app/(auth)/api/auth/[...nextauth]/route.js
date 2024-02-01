@@ -11,7 +11,17 @@ export const authOptions = {
         const { email, pass } = credentials;
 
         const selectUser = await conn.query(
-          "SELECT * FROM user WHERE email = ?",
+          `SELECT
+          userId,
+          firstName,
+          lastName,
+          userTypeId,
+          lastSignIn,
+          pass,
+          username,
+          email
+          FROM user
+          WHERE email = ?`,
           email
         );
 
@@ -19,11 +29,13 @@ export const authOptions = {
 
         if (selectUser.length > 0) {
           const data = selectUser[0];
-          const hashedPass = data?.pass;
+          const hashedPass = data.pass;
           const checkPass = await uHashP(pass, hashedPass);
           if (checkPass) {
+            const dataToJSON = JSON.stringify(data);
+            const accessToken = sign(dataToJSON);
             delete data.pass;
-            const accessToken = sign(data);
+            delete data.userId;
             return {
               ...data,
               accessToken,
