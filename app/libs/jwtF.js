@@ -1,11 +1,19 @@
 import jwt from "jsonwebtoken";
 
 export function sign(payload) {
-  const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
-  return token;
+  try {
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
+    return token;
+  } catch (error) {
+    return error;
+  }
 }
 
 export function verify(token) {
-  const data = jwt.verify(token, process.env.NEXTAUTH_SECRET);
-  return data;
+  try {
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    return data;
+  } catch (error) {
+    return error;
+  }
 }
