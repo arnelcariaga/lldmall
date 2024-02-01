@@ -81,7 +81,8 @@ export default function SignInForm() {
             setShowToast(true)
             setDisableBtn(false)
         } else {
-            router.replace("/dashboard")
+            router.replace("/")
+            router.refresh() //To refresh user profile to prevent showing follow btn
         }
     }
 
