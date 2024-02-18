@@ -34,6 +34,8 @@ export default function SellForm() {
         formState: { errors },
     } = useForm()
 
+    console.log(errors)
+
     const inputs = useMemo(() => {
         return [{
             type: "text",
