@@ -1,0 +1,10 @@
+.logo_text {
+  font-weight: 600;
+}
+.navbar_icons {
+  font-size: 1.2rem;
+}
+.user_dropdown a::after {
+  display: none !important;
+  content: none !important;
+}
