@@ -31,9 +31,9 @@ export default function AuthUserNavs({ user }) {
             </NavDropdown.Item>
 
             <NavDropdown.Divider />
-            <Link href={user?.username} passHref legacyBehavior className='text-decoration-none'>
+            <Link href="/dashboard" passHref legacyBehavior className='text-decoration-none'>
                 <NavDropdown.Item>
-                    Mi perfil
+                    Panel de control
                 </NavDropdown.Item>
             </Link>
 
