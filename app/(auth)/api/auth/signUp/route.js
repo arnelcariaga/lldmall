@@ -7,19 +7,19 @@ export async function POST(request) {
     const { pass, firstName, lastName, email, countryId, username } =
       await request.json();
 
-    const checkUser = await conn.query(
+    const emailStmt = await conn.query(
       "SELECT email FROM user WHERE email = ?",
       email
     );
 
-    const checkUsername = await conn.query(
-      "SELECT username FROM registered_usernames WHERE username = ?",
+    const usernameStmt = await conn.query(
+      "SELECT username FROM user WHERE email = ?",
       username
     );
 
     await conn.end();
 
-    if (checkUser.length > 0) {
+    if (emailStmt.length > 0) {
       return NextResponse.json(
         {
           message: "user_already_exist",
@@ -28,7 +28,7 @@ export async function POST(request) {
           status: 401,
         }
       );
-    } else if (checkUsername.length > 0) {
+    } else if (usernameStmt.length > 0) {
       return NextResponse.json(
         {
           message: "username_already_exist",
@@ -43,45 +43,22 @@ export async function POST(request) {
       const results = await conn.query("INSERT INTO user SET ?", {
         firstName,
         lastName,
+        username,
         email,
         pass: pHashh,
         userTypeId: 2, //Default to 2 (User)
         countryId,
       });
 
-      await conn.end();
-
       if (results) {
-        const userId = results.insertId;
-        const resultsInsertUsername = await conn.query(
-          "INSERT INTO registered_usernames SET ?",
+        return NextResponse.json(
           {
-            username,
-            userId,
+            message: "user_successfully_added",
+          },
+          {
+            status: 200,
           }
         );
-
-        await conn.end();
-
-        if (resultsInsertUsername) {
-          return NextResponse.json(
-            {
-              message: "user_successfully_added",
-            },
-            {
-              status: 200,
-            }
-          );
-        } else {
-          return NextResponse.json(
-            {
-              message: "adding_user_failed",
-            },
-            {
-              status: 500,
-            }
-          );
-        }
       } else {
         return NextResponse.json(
           {
