@@ -1,0 +1,36 @@
+.sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  margin-left: -250px;
+  transition: all 0.5s;
+}
+
+.category_head {
+  padding: 10px;
+}
+
+.is_open {
+  margin-left: 0;
+  transition: 0.5s;
+}
+
+.sidebar_header h3 {
+  padding: 1em;
+}
+
+.nav_item a {
+  color: #adb5bd;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.nav_item.active a {
+  color: #e9ecef;
+  background: #2d3646 !important;
+}
+
+.nav_item a:hover {
+  background: #313b4c;
+  color: #fff;
+  transition: 0.2s;
+}
