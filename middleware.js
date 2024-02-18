@@ -7,15 +7,14 @@ export async function middleware(request) {
   const user = token?.user;
 
   const Redirect = () => {
-    if (user.userTypeId === 1) {
+    if (user.userTypeId === 2) {
+      //User
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    } else if (user.userTypeId === 1) {
+      //Admin
       return NextResponse.redirect(new URL("/adm/dashboard", request.url));
     } else {
-      return NextResponse.redirect(
-        new URL(
-          "/signIn?error=Please login first to access this route",
-          request.url
-        )
-      );
+      return NextResponse.redirect(new URL("/not-found", request.url));
     }
   };
 
@@ -25,28 +24,29 @@ export async function middleware(request) {
     return Redirect();
   }
 
-  if (!!token && pathname.startsWith("/adm") && user.userTypeId !== 1) {
-    return Redirect();
-  }
-
   if (!token) {
-    if (pathname.includes("/adm/dashboard")) {
-      return Response.json(
-        { success: false, message: "authentication failed" },
-        { status: 401 }
-      );
+    if (
+      pathname.includes("/adm/dashboard") ||
+      pathname.includes("/dashboard")
+    ) {
+      return NextResponse.redirect(new URL("/not-found", request.url));
     }
   } else {
-    if (pathname.startsWith("/adm/dashboard") && user.userTypeId !== 1) {
-      console.log(pathname, user.userTypeId);
-      return Response.json(
-        { success: false, message: "authentication failed" },
-        { status: 401 }
-      );
+    if (
+      (pathname.startsWith("/adm/dashboard") && user.userTypeId !== 1) ||
+      (pathname.startsWith("/dashboard") && user.userTypeId !== 2)
+    ) {
+      return Redirect();
     }
   }
 }
 
 export const config = {
-  matcher: ["/signIn", "/signUp", "/forgot_password", "/adm/:path*"],
+  matcher: [
+    "/signIn",
+    "/signUp",
+    "/forgot_password",
+    "/adm/:path*",
+    "/dashboard/:path*",
+  ],
 };
